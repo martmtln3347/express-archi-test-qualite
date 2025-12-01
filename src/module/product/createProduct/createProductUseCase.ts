@@ -26,7 +26,6 @@ export class CreateProductUseCase {
             throw new Error('le prix doit être inférieur à 10000');
         }
 
-
         const product = new Product({ title, description, price });
 
         try {
@@ -34,10 +33,5 @@ export class CreateProductUseCase {
         } catch (error) {
             throw new Error('erreur lors de la création du produit');
         }
-    }
-
-
-
-
     }
 }

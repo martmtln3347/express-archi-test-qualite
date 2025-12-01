@@ -1,4 +1,3 @@
-version: '3.8'
 
 services:
   db:
@@ -10,7 +9,7 @@ services:
     ports:
       - "${DB_PORT}:${DB_PORT}"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - postgres_data:/var/lib/postgresql
 
   sonarqube:
     image: sonarqube:community
@@ -36,7 +35,7 @@ services:
       POSTGRES_PASSWORD: sonar
       POSTGRES_DB: sonar
     volumes:
-      - sonardb_data:/var/lib/postgresql/data
+      - sonardb_data:/var/lib/postgresql
 
 volumes:
   postgres_data:
