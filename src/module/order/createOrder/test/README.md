@@ -36,3 +36,24 @@ Chaque scénario suit la même structure :
 3. **Then** : on vérifie soit que l'appel réussit (`resolves.not.toThrow()`), soit qu'une erreur fonctionnelle est levée (`rejects.toThrow(...)`).
 
 Cette granularité permet de documenter clairement le comportement attendu de la création de commande et de garantir que toute régression sur ces règles métier sera détectée rapidement.
+
+## Tests End-to-End (`createOrder.e2e.spec.ts`)
+
+- **Objectif** : Valider le flux complet HTTP → Use Case → Repository → PostgreSQL via une base éphémère gérée par Testcontainers.
+- **Setup** :
+    - Démarre un container `postgres:16` par test suite.
+    - Initialise un `DataSource` TypeORM dédié avec l'entité `Order` et synchronisation auto.
+    - Remplace la configuration globale (`AppDataSource`) par cette datasource de test avant de construire l'app Express.
+- **Scénarios couverts** :
+    1. Création réussie (`201`) et vérification des données persistées (prix, produits, statut `PENDING`, `creationDate`).
+    2. Échec quand 6 produits sont envoyés (`400` + message métier) et absence d'insertion en BDD.
+
+## Lancer les tests
+
+Tous les tests (unitaires + e2e) s'exécutent via la même commande :
+
+```bash
+npm run test
+```
+
+> Les tests e2e utilisent Docker (Testcontainers). Assurez-vous que Docker Desktop est ouvert avant d'exécuter la commande.
