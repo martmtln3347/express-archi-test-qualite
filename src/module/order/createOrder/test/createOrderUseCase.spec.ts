@@ -72,4 +72,19 @@ describe('US-2 : Créer une commande', () => {
             })
         ).rejects.toThrow('La commande ne peut pas contenir plus de 5 produits');
     });
+
+    test('Scénario 6 : echec, 6 identifiants produits envoyés', async () => {
+        // Étant donné qu'il n'y a pas de commande enregistrée
+        const createOrderRepository = new CreateOrderDummyRepository();
+        const createOrderUseCase = new CreateOrderUseCase(createOrderRepository);
+
+        await expect(
+            // Quand j'essaie de créer une commande avec 6 produits
+            createOrderUseCase.execute({
+                totalPrice: 120,
+                productIds: ['1', '2', '3', '4', '5', '6']
+            })
+            // Alors une erreur métier doit être renvoyée
+        ).rejects.toThrow('La commande ne peut pas contenir plus de 5 produits');
+    });
 });
