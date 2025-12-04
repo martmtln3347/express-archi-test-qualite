@@ -26,6 +26,7 @@ src/module/order/
   - Contient la validation métier (prix min/max, nombre de produits).
   - Utilise TypeORM pour la persistance.
   - Constructeur sécurisé pour garantir la validité de l'objet à l'instanciation.
+  - Initialise automatiquement `status` à `PENDING` et `creationDate` en appelant `new Date()` afin d'assurer l'encapsulation des règles de création.
 
 - **Use Case (`createOrderUseCase.ts`)** :
   - Orchestre la création.
@@ -34,6 +35,19 @@ src/module/order/
 
 - **Repository** :
   - Séparation Interface / Implémentation pour respecter le DIP (Dependency Inversion Principle).
+
+- **Controller** :
+  - Point d'entrée HTTP (`POST /orders`) qui instancie le use case.
+  - Centralise la capture des erreurs fonctionnelles (400) vs techniques (500).
+
+## Qualité & Tests
+
+- **Qualité de code** :
+  - ESLint + Prettier appliqués sur l'ensemble du module (mêmes règles que le reste du projet).
+  - Respect des messages d'erreur en français côté métier pour rester cohérent avec le reste de l'API.
+- **Tests** :
+  - Tests unitaires (`createOrderUseCase.spec.ts`) couvrant chaque règle métier (bornes prix + bornes nombre de produits).
+  - Utilisation d'un Dummy Repository pour isoler la logique métier et accélérer l'exécution.
 
 ## Règles Métier
 

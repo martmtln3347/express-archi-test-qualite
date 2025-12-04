@@ -8,7 +8,7 @@ export class Order {
     @Column({ type: 'float' })
     public totalPrice: number;
 
-    @Column("simple-array")
+    @Column('simple-array')
     public productIds: string[];
 
     @Column({ type: 'varchar', default: 'PENDING' })
@@ -24,6 +24,7 @@ export class Order {
             this.totalPrice = props.totalPrice;
             this.productIds = props.productIds;
             this.status = 'PENDING';
+            this.creationDate = new Date();
         }
     }
 
